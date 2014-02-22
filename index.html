@@ -32,14 +32,16 @@
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
+    var routeStyle = {
+        "weight": 2,
+        "opacity": 0.5
+    };
 
     L.polyline([
         [0, 0],
         [30, 30],
         [0, 20]
-    ]).addTo(map);
-
-
+    ], routeStyle).addTo(map);
     </script>
 </body>
 

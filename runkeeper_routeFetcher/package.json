@@ -1,0 +1,10 @@
+{
+    "name": "Runkeeper_RouteFetcher",
+    "author": "Dennis Wilhelm",
+    "version": "0.0.1",
+    "description": "",
+    "license": "MIT",
+    "dependencies": {
+        "request": "latest"
+    }
+}   

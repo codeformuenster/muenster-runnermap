@@ -1,22 +1,53 @@
 var request = require('request');
 var fs = require('fs');
 
+var routesUrls = require('../runscraper/routes.json');
 
-getRoute('http://runkeeper.com/user/1326910888/route');
+var geojsonCollection = {
+    "type": "FeatureCollection",
+    "features": []
+};
+
+var lastRequest = false;
 
 
-function getRoute(url) {
-    request(url, function(error, response, body) {
-        if (!error && response.statusCode == 200) {
+//getRoute('http://runkeeper.com/user/1326910888/route');
+getRouteUrls();
+
+function getRouteUrls() {
+    for (var i = 0; i < routesUrls.routes.length; i++) {
+        if (i == routesUrls.routes.length - 1) {
+            getRoute(routesUrls.routes[i].href, true);
+
+        } else {
+            getRoute(routesUrls.routes[i].href, false);
+        }
+
+
+    }
+
+
+}
+
+
+function getRoute(url, last) {
+    request('http://runkeeper.com' + url, function(error, response, body) {
+        if (!error && response.statusCode === 200) {
             var start = body.indexOf('var routePoints =');
             var end = body.indexOf('];', start);
             console.log("Start: " + start + "End: " + end);
 
-            var route = body.substring(start + 18, end + 1);
-            var jsonRoute = JSON.parse(route);
+            if (start !== -1) {
+                var route = body.substring(start + 18, end + 1);
+                var jsonRoute = JSON.parse(route);
 
-            var geojsonRoute = convertToGeojsonLine(jsonRoute);
-            writeToFile('route.json', JSON.stringify(geojsonRoute));
+                var geojsonRoute = convertToGeojsonLine(jsonRoute);
+                geojsonCollection.features.push(geojsonRoute);
+
+                if (last) {
+                    writeToFile('route.json', JSON.stringify(geojsonCollection));
+                }
+            }
 
         } else {
             console.log(error);

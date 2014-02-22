@@ -1,0 +1,19 @@
+#sidebar {
+  overflow-y: auto;
+  height: 100%;
+  padding: 20px;
+  color: #fff;
+  width: 300px;
+  right: 0px;
+  position: absolute;
+  z-index: 9999;
+  background-color: rgba(0,0,0,0.9);
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Oswald', sans-serif;
+}
+
+p {
+  font-family: 'Old Standard TT', serif;
+}

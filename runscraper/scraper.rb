@@ -22,15 +22,15 @@ while found do
   puts "fetching #{sourceUrl}#{page}"
   data = RestClient.post("#{sourceUrl}#{page}", params)
   doc = Nokogiri::HTML(data)
-  current_links = doc.css(".avatar").map{ |avatar| avatar[:href] }
+  current_links = doc.css(".resultListItem").map{ |avatar| avatar[:link] }
   found = !current_links.empty?
   links << current_links
   page += 1
 end
 
-users = links.flatten.uniq.map{ |link| link.gsub("/user/", "").gsub("/profile", "") }
-users = { users: users.map{ |user| { name: user } } }
+routes = links.flatten.uniq.map{ |link| link.split("/").last }
+routes = { routes: routes.map{ |id| { id: id } } }
 
-File.open("users.json","w") do |f|
-  f.write(users.to_json)
+File.open("routes.json","w") do |f|
+  f.write(routes.to_json)
 end

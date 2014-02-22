@@ -28,8 +28,8 @@ while found do
   page += 1
 end
 
-routes = links.flatten.uniq.map{ |link| link.split("/").last }
-routes = { routes: routes.map{ |id| { id: id } } }
+routes = links.flatten.uniq
+routes = { routes: routes.map{ |href| { href: href } } }
 
 File.open("routes.json","w") do |f|
   f.write(routes.to_json)

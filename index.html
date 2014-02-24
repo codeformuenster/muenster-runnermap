@@ -49,6 +49,10 @@
 
     var map = L.mapbox.map('map', 'ubergesundheit.hbg089g4');
 
+    L.control.attribution({prefix: '' })
+    .addAttribution('Tiles rendered with <a href="https://www.mapbox.com/tilemill/" target="_blank">Tilemill</a>')
+    .addAttribution('Tiles hosted by <a href="https://www.mapbox.com/" target="_blank">Mapbox</a>')
+    .addTo(map);
     </script>
 </body>
 
